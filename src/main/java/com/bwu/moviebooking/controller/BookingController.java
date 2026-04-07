@@ -1,6 +1,6 @@
 package com.bwu.moviebooking.controller;
 
-import com.bwu.moviebooking.entity.Booking;
+import com.bwu.moviebooking.model.Booking;
 import com.bwu.moviebooking.repository.BookingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

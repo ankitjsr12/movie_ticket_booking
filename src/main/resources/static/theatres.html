@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theatres in Kolkata • Cinema Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    :root {
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    
+    .dark {
+        background-color: #0a0a0a;
+        color: #ffffff;
+    }
+    
+    .theme-transition * {
+        transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+</style>
+<body class="bg-black text-white">
+
+<!-- Navbar (same as others) -->
+<nav class="bg-black border-b border-red-800 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div onclick="window.location.href='index.html'" class="flex items-center gap-3 cursor-pointer">
+      <span class="text-4xl">🎟️</span>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tighter">CINEMA</h1>
+        <p class="text-red-500 text-sm -mt-1">BOOKING TICKET</p>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+      <a href="movies.html" class="hover:text-red-500">Movies</a>
+      <a href="shows.html" class="hover:text-red-500">Shows</a>
+      <a href="theatres.html" class="text-red-500 font-bold">Theatres</a>
+      <a href="coupons.html" class="hover:text-red-500">Coupons</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <div id="user-section" class="hidden md:flex items-center gap-3">
+        <i class="fas fa-user-circle text-3xl text-red-400"></i>
+        <span id="user-name-display" class="font-semibold"></span>
+      </div>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <h1 class="text-5xl font-bold mb-4 text-red-500 text-center">Theatres in Kolkata</h1>
+    <p class="text-center text-gray-400 mb-12">Rich History of Kolkata's Cinema Culture</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <div class="bg-gray-900 rounded-3xl p-8 hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Star Theatre</h3>
+            <p class="text-red-400 text-sm mb-4">Est. 1883</p>
+            <p class="text-gray-300">Kolkata's oldest surviving commercial theatre. Once the heart of Bengali theatre and film. Many legendary plays and early films were screened here.</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-3xl p-8 hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Metro Cinema</h3>
+            <p class="text-red-400 text-sm mb-4">Est. 1934</p>
+            <p class="text-gray-300">Iconic Art Deco style theatre. One of the most beautiful cinemas in India. Still loved for its grand architecture and classic film screenings.</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-3xl p-8 hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Nandan</h3>
+            <p class="text-red-400 text-sm mb-4">Est. 1985</p>
+            <p class="text-gray-300">Government-run cultural complex named after Rabindranath Tagore. Major centre for film festivals, art cinema and cultural events in Kolkata.</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-3xl p-8 hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">PVR INOX South City Mall</h3>
+            <p class="text-red-400 text-sm mb-4">Modern Multiplex</p>
+            <p class="text-gray-300">Most popular modern multiplex in South Kolkata. Known for comfortable seating, latest Hollywood & Bollywood releases.</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-3xl p-8 hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">Cinepolis Acropolis</h3>
+            <p class="text-red-400 text-sm mb-4">Modern Multiplex</p>
+            <p class="text-gray-300">Premium multiplex with luxury recliners and excellent sound system. Very popular among young audience.</p>
+        </div>
+
+        <div class="bg-gray-900 rounded-3xl p-8 hover:scale-105 transition">
+            <h3 class="text-2xl font-bold mb-2">RDB Cinemas</h3>
+            <p class="text-red-400 text-sm mb-4">Modern Multiplex</p>
+            <p class="text-gray-300">Located in Salt Lake, known for its big screens and family-friendly environment.</p>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function logout() {
+        if(confirm("Logout karna chahte ho?")) {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login • Cinema Booking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #1f0000, #000000); }
+        .glass { background: rgba(255,255,255,0.08); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.15); }
+    </style>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    :root {
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    
+    .dark {
+        background-color: #0a0a0a;
+        color: #ffffff;
+    }
+    
+    .theme-transition * {
+        transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+</style>
+<body class="min-h-screen flex items-center justify-center text-white">
+    <div class="glass max-w-md w-full mx-4 rounded-3xl p-10 shadow-2xl">
+        <div class="text-center mb-8">
+            <h1 class="text-5xl font-bold text-red-500">🎟️</h1>
+            <h2 class="text-3xl font-bold mt-4">Cinema Booking Ticket</h2>
+            <p class="text-red-400">Brainware University</p>
+        </div>
+
+        <div class="flex bg-gray-800 rounded-2xl p-1 mb-8">
+            <button onclick="switchTab(0)" id="tab-login" class="flex-1 py-4 rounded-xl font-semibold bg-red-600">LOGIN</button>
+            <button onclick="switchTab(1)" id="tab-signup" class="flex-1 py-4 rounded-xl font-semibold">SIGN UP</button>
+        </div>
+
+        <div id="login-form">
+            <input id="login-email" type="email" placeholder="Email" value="ankit@gmail.com" class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 mb-4 focus:outline-none focus:border-red-500">
+            <input id="login-password" type="password" placeholder="Password" value="12345" class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 mb-6 focus:outline-none focus:border-red-500">
+            <button onclick="login()" class="w-full bg-red-600 hover:bg-red-700 py-5 text-xl font-bold rounded-2xl">Sign In</button>
+        </div>
+
+        <div id="signup-form" class="hidden">
+            <input id="signup-name" type="text" placeholder="Full Name" value="Ankit Kumar" class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 mb-4 focus:outline-none focus:border-red-500">
+            <input id="signup-email" type="email" placeholder="Email" value="ankit@gmail.com" class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 mb-4 focus:outline-none focus:border-red-500">
+            <input id="signup-password" type="password" placeholder="Password" value="12345" class="w-full bg-white/10 border border-white/20 rounded-2xl px-6 py-5 mb-6 focus:outline-none focus:border-red-500">
+            <button onclick="signup()" class="w-full bg-red-600 hover:bg-red-700 py-5 text-xl font-bold rounded-2xl">Create Account</button>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(n) {
+            document.getElementById('login-form').classList.toggle('hidden', n === 1);
+            document.getElementById('signup-form').classList.toggle('hidden', n === 0);
+        }
+        function login() {
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userName", "Ankit Kumar");
+            alert("✅ Login Successful!");
+            window.location.href = "index.html";
+        }
+        function signup() {
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userName", document.getElementById("signup-name").value);
+            alert("✅ Account Created Successfully!");
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

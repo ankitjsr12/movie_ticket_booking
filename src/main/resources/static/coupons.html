@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupons • Cinema Booking Ticket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    :root {
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    
+    .dark {
+        background-color: #0a0a0a;
+        color: #ffffff;
+    }
+    
+    .theme-transition * {
+        transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+</style>
+<body class="bg-black text-white">
+
+<!-- Navbar with Dark/Light Toggle -->
+<nav class="bg-black border-b border-red-800 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div onclick="window.location.href='index.html'" class="flex items-center gap-3 cursor-pointer">
+      <span class="text-4xl">🎟️</span>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tighter">CINEMA</h1>
+        <p class="text-red-500 text-sm -mt-1">BOOKING TICKET</p>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+      <a href="movies.html" class="hover:text-red-500">Movies</a>
+      <a href="shows.html" class="hover:text-red-500">Shows</a>
+      <a href="theatres.html" class="hover:text-red-500">Theatres</a>
+      <a href="coupons.html" class="text-red-500 font-bold">Coupons</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button onclick="toggleTheme()" class="text-2xl px-3 py-2 rounded-xl hover:bg-gray-800">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+      <div id="user-section" class="hidden md:flex items-center gap-3">
+        <i class="fas fa-user-circle text-3xl text-red-400"></i>
+        <span id="user-name-display" class="font-semibold"></span>
+      </div>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <h1 class="text-5xl font-bold mb-4 text-red-500 text-center">Active Coupons</h1>
+    <p class="text-center text-gray-400 mb-12">Use these coupons and save money on your tickets!</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-gradient-to-br from-red-900 to-gray-900 p-8 rounded-3xl border border-red-700">
+            <h3 class="text-2xl font-bold">MOVIE10</h3>
+            <p class="text-amber-400 text-4xl font-bold mt-4">10% OFF</p>
+            <p class="mt-6 text-gray-300">On total ticket price (Minimum ₹500)</p>
+            <button onclick="useCoupon('MOVIE10')" class="mt-8 w-full bg-white text-black py-4 rounded-2xl font-bold">Use Coupon</button>
+        </div>
+
+        <div class="bg-gradient-to-br from-red-900 to-gray-900 p-8 rounded-3xl border border-red-700">
+            <h3 class="text-2xl font-bold">BRAINWARE20</h3>
+            <p class="text-amber-400 text-4xl font-bold mt-4">20% OFF</p>
+            <p class="mt-6 text-gray-300">For students of Brainware University</p>
+            <button onclick="useCoupon('BRAINWARE20')" class="mt-8 w-full bg-white text-black py-4 rounded-2xl font-bold">Use Coupon</button>
+        </div>
+
+        <div class="bg-gradient-to-br from-red-900 to-gray-900 p-8 rounded-3xl border border-red-700">
+            <h3 class="text-2xl font-bold">FIRST50</h3>
+            <p class="text-amber-400 text-4xl font-bold mt-4">₹50 OFF</p>
+            <p class="mt-6 text-gray-300">On your first booking</p>
+            <button onclick="useCoupon('FIRST50')" class="mt-8 w-full bg-white text-black py-4 rounded-2xl font-bold">Use Coupon</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function useCoupon(code) {
+        alert(`✅ Coupon "${code}" applied successfully!\nYou will get discount on next booking.`);
+    }
+
+    function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+        const icon = document.getElementById('theme-icon');
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    function logout() {
+        if(confirm("Logout karna chahte ho?")) {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    }
+
+    // Load saved theme
+    window.onload = () => {
+        if (localStorage.getItem('theme') === 'light') {
+            document.documentElement.classList.remove('dark');
+            document.getElementById('theme-icon').classList.replace('fa-moon', 'fa-sun');
+        }
+        const name = localStorage.getItem("userName");
+        if(name) {
+            document.getElementById("user-name-display").innerText = name;
+            document.getElementById("user-section").classList.remove("hidden");
+            document.getElementById("user-section").classList.add("flex");
+        }
+    };
+</script>
+</body>
+</html>

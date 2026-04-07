@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Booking Ticket</title>   <!-- Page ke hisaab se change kar sakte ho -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- CINEMA LOGO FAVICON -->
+    <link rel="icon" href="/images/cinema-logo.png" type="image/png">
+    <style>
+      body {
+        background: linear-gradient(to bottom, #1a0000, #000000);
+      }
+      .hero {
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.85)),
+          url("https://picsum.photos/id/1015/1920/1080") center/cover;
+      }
+      .movie-card {
+        transition: all 0.4s ease;
+      }
+      .movie-card:hover {
+        transform: scale(1.08);
+        box-shadow: 0 20px 30px rgba(239, 68, 68, 0.4);
+      }
+    </style>
+  </head>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+    :root {
+      transition:
+        background-color 0.4s ease,
+        color 0.4s ease;
+    }
+
+    .dark {
+      background-color: #0a0a0a;
+      color: #ffffff;
+    }
+
+    .theme-transition * {
+      transition:
+        background-color 0.4s ease,
+        color 0.4s ease,
+        border-color 0.4s ease;
+    }
+  </style>
+  <body class="text-white">
+    <!-- FINAL PROFESSIONAL NAVBAR -->
+    <nav class="bg-black border-b border-red-800 sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <div
+          onclick="window.location.href = 'index.html'"
+          class="flex items-center gap-3 cursor-pointer"
+        >
+          <span class="text-4xl">🎟️</span>
+          <div>
+            <h1 class="text-3xl font-bold tracking-tighter">CINEMA</h1>
+            <p class="text-red-500 text-sm -mt-1">BOOKING TICKET</p>
+          </div>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+          <a href="movies.html" class="hover:text-red-500">Movies</a>
+          <a href="shows.html" class="hover:text-red-500">Shows</a>
+          <a href="theatres.html" class="hover:text-red-500">Theatres</a>
+          <a href="coupons.html" class="hover:text-red-500">Coupons</a>
+          <a href="history.html" class="hover:text-red-500">My Bookings</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button
+            onclick="toggleTheme()"
+            class="text-2xl px-3 py-2 rounded-xl hover:bg-gray-800 transition"
+          >
+            <i id="theme-icon" class="fas fa-moon"></i>
+          </button>
+          <div id="user-section" class="hidden md:flex items-center gap-3">
+            <i class="fas fa-user-circle text-3xl text-red-400"></i>
+            <span id="user-name-display" class="font-semibold"></span>
+          </div>
+          <button
+            onclick="logout()"
+            class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2"
+          >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero h-screen flex items-center">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <h1 class="text-6xl md:text-7xl font-bold mb-6">
+          Book Your Movie Ticket
+        </h1>
+        <p class="text-2xl mb-10">Premium Experience in Kolkata Theatres</p>
+        <a
+          href="movies.html"
+          class="bg-red-600 hover:bg-red-700 text-white text-2xl px-12 py-5 rounded-2xl inline-block font-bold transition-all hover:scale-105"
+        >
+          Browse Movies →
+        </a>
+      </div>
+    </div>
+
+    <!-- Now Showing -->
+    <div class="max-w-7xl mx-auto px-6 py-16">
+      <h2 class="text-4xl font-bold mb-10">Now Showing</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="movie-grid"></div>
+    </div>
+
+    <!-- Date & Time Modal -->
+    <div
+      id="date-modal"
+      class="hidden fixed inset-0 bg-black/80 flex items-center justify-center z-[100]"
+    >
+      <div class="bg-gray-900 rounded-3xl p-8 max-w-md w-full mx-4">
+        <h2 class="text-2xl font-bold mb-6 text-center">Select Date & Time</h2>
+        <p class="text-red-400 text-center mb-6">07 April 2026</p>
+        <div class="grid grid-cols-4 gap-4 text-center">
+          <div
+            onclick="selectDate(this)"
+            class="bg-gray-800 hover:bg-red-600 py-4 rounded-2xl cursor-pointer"
+          >
+            6 Apr
+          </div>
+          <div
+            onclick="selectDate(this)"
+            class="bg-red-600 py-4 rounded-2xl cursor-pointer"
+          >
+            7 Apr
+          </div>
+          <div
+            onclick="selectDate(this)"
+            class="bg-gray-800 hover:bg-red-600 py-4 rounded-2xl cursor-pointer"
+          >
+            8 Apr
+          </div>
+          <div
+            onclick="selectDate(this)"
+            class="bg-gray-800 hover:bg-red-600 py-4 rounded-2xl cursor-pointer"
+          >
+            9 Apr
+          </div>
+        </div>
+        <button
+          onclick="hideDateModal()"
+          class="mt-8 w-full bg-red-600 py-4 rounded-2xl font-bold"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+
+    <script>
+      function showDateTimeModal() {
+        document.getElementById("date-modal").classList.remove("hidden");
+      }
+      function hideDateModal() {
+        document.getElementById("date-modal").classList.add("hidden");
+      }
+      function selectDate(el) {
+        document
+          .querySelectorAll("#date-modal div")
+          .forEach((d) => d.classList.remove("bg-red-600"));
+        el.classList.add("bg-red-600");
+      }
+    </script>
+
+    <script>
+      const movies = [
+        { title: "Doctor Strange in the Multiverse of Madness", poster: "🪄" },
+        { title: "Deadpool & Wolverine", poster: "🦸" },
+        { title: "Dune: Part Two", poster: "🌌" },
+        { title: "Kingdom of the Planet of the Apes", poster: "🐵" },
+      ];
+
+      document.getElementById("movie-grid").innerHTML = movies
+        .map(
+          (m) => `
+    <div onclick="window.location='movies.html'" class="movie-card bg-gray-900 rounded-3xl overflow-hidden cursor-pointer">
+      <div class="text-8xl text-center py-12">${m.poster}</div>
+      <div class="p-6 text-center">
+        <h3 class="font-bold">${m.title}</h3>
+      </div>
+    </div>
+  `,
+        )
+        .join("");
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+        const icon = document.getElementById("theme-icon");
+        if (document.documentElement.classList.contains("dark")) {
+          icon.classList.replace("fa-moon", "fa-sun");
+        } else {
+          icon.classList.replace("fa-sun", "fa-moon");
+        }
+      }
+
+      function logout() {
+        if (confirm("Logout karna chahte ho?")) {
+          localStorage.clear();
+          window.location.href = "login.html";
+        }
+      }
+
+      window.onload = () => {
+        const name = localStorage.getItem("userName");
+        if (name) {
+          document.getElementById("user-name-display").innerText = name;
+          document.getElementById("user-section").classList.remove("hidden");
+          document.getElementById("user-section").classList.add("flex");
+        }
+      };
+    </script>
+  </body>
+</html>

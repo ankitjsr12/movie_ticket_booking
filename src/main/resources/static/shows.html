@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upcoming Shows • Cinema Booking Ticket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: linear-gradient(to bottom, #1a0000, #000000);
+      }
+      .upcoming-card {
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      .upcoming-card:hover {
+        transform: scale(1.08) translateY(-8px);
+        box-shadow: 0 25px 50px -12px rgb(239 68 68);
+      }
+      .poster {
+        transition: all 0.5s ease;
+      }
+      .upcoming-card:hover .poster {
+        transform: scale(1.05);
+      }
+    </style>
+  </head>
+  <body class="text-white">
+    <!-- PROFESSIONAL NAVBAR -->
+    <nav class="bg-black border-b border-red-800 sticky top-0 z-50">
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <div
+          onclick="window.location.href = 'index.html'"
+          class="flex items-center gap-3 cursor-pointer"
+        >
+          <span class="text-4xl">🎟️</span>
+          <div>
+            <h1 class="text-3xl font-bold tracking-tighter">CINEMA</h1>
+            <p class="text-red-500 text-sm -mt-1">BOOKING TICKET</p>
+          </div>
+        </div>
+
+        <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+          <a href="movies.html" class="hover:text-red-500">Movies</a>
+          <a href="shows.html" class="text-red-500 font-bold">Shows</a>
+          <a href="theatres.html" class="hover:text-red-500">Theatres</a>
+          <a href="coupons.html" class="hover:text-red-500">Coupons</a>
+          <a href="history.html" class="hover:text-red-500">My Bookings</a>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button
+            onclick="toggleTheme()"
+            class="text-3xl px-4 py-2 rounded-2xl hover:bg-gray-800 transition-all active:scale-95"
+          >
+            <i id="theme-icon" class="fas fa-moon"></i>
+          </button>
+          <div id="user-section" class="hidden md:flex items-center gap-3">
+            <i class="fas fa-user-circle text-3xl text-red-400"></i>
+            <span id="user-name-display" class="font-semibold"></span>
+          </div>
+          <button
+            onclick="logout()"
+            class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2 transition-all active:scale-95"
+          >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-12">
+      <h1 class="text-5xl font-bold mb-4 text-red-500 text-center">
+        Upcoming Movies
+      </h1>
+      <p class="text-center text-gray-400 mb-12">
+        Coming Soon to Kolkata Theatres
+      </p>
+
+      <div
+        class="grid grid-cols-2 md:grid-cols-4 gap-8"
+        id="upcoming-movies"
+      ></div>
+    </div>
+
+    <script>
+      const upcoming = [
+        {
+          title: "Deadpool & Wolverine",
+          image: "/images/Deadpool.jpeg",
+          date: "25 April 2026",
+        },
+        {
+          title: "Dune: Messiah",
+          image: "/images/dune1.jpeg",
+          date: "18 May 2026",
+        },
+        {
+          title: "Avengers: Doomsday",
+          image: "/images/avengers.jpeg",
+          date: "01 May 2026",
+        },
+        {
+          title: "Superman (2025)",
+          image: "/images/superman.jpeg",
+          date: "11 July 2026",
+        },
+        {
+          title: "The Fantastic Four",
+          image: "/images/fantastic-four.jpeg",
+          date: "08 August 2026",
+        },
+        { title: "Blade", image: "/images/blade.jpeg", date: "15 October 2026" },
+        {
+          title: "Jurassic World Rebirth",
+          image: "/images/jurassic.jpeg",
+          date: "02 July 2026",
+        },
+        {
+          title: "Mission: Impossible 8",
+          image: "/images/mission-impossible.jpeg",
+          date: "23 May 2026",
+        },
+      ];
+
+      document.getElementById("upcoming-movies").innerHTML = upcoming
+        .map(
+          (m) => `
+        <div class="upcoming-card bg-gray-900 rounded-3xl overflow-hidden cursor-pointer">
+            <img src="${m.image}" alt="${m.title}" class="poster w-full h-80 object-cover">
+            <div class="p-6 text-center">
+                <h3 class="font-bold text-lg">${m.title}</h3>
+                <p class="text-red-400 mt-2">${m.date}</p>
+            </div>
+        </div>
+    `,
+        )
+        .join("");
+
+      function toggleTheme() {
+        document.documentElement.classList.toggle("dark");
+        const icon = document.getElementById("theme-icon");
+        if (document.documentElement.classList.contains("dark")) {
+          icon.classList.replace("fa-moon", "fa-sun");
+          localStorage.setItem("theme", "dark");
+        } else {
+          icon.classList.replace("fa-sun", "fa-moon");
+          localStorage.setItem("theme", "light");
+        }
+      }
+
+      function logout() {
+        if (confirm("Logout karna chahte ho?")) {
+          localStorage.clear();
+          window.location.href = "login.html";
+        }
+      }
+
+      window.onload = () => {
+        const name = localStorage.getItem("userName");
+        if (name) {
+          document.getElementById("user-name-display").innerText = name;
+          document.getElementById("user-section").classList.remove("hidden");
+          document.getElementById("user-section").classList.add("flex");
+        }
+      };
+    </script>
+  </body>
+</html>

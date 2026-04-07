@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookings • Cinema Booking Ticket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    :root {
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    
+    .dark {
+        background-color: #0a0a0a;
+        color: #ffffff;
+    }
+    
+    .theme-transition * {
+        transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+</style>
+<body class="bg-black text-white">
+
+<nav class="bg-black border-b border-red-800 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div onclick="window.location.href='index.html'" class="flex items-center gap-3 cursor-pointer">
+      <span class="text-4xl">🎟️</span>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tighter">CINEMA</h1>
+        <p class="text-red-500 text-sm -mt-1">BOOKING TICKET</p>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+      <a href="movies.html" class="hover:text-red-500">Movies</a>
+      <a href="shows.html" class="hover:text-red-500">Shows</a>
+      <a href="theatres.html" class="hover:text-red-500">Theatres</a>
+      <a href="coupons.html" class="hover:text-red-500">Coupons</a>
+      <a href="history.html" class="text-red-500 font-bold">My Bookings</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button onclick="toggleTheme()" class="text-2xl px-3 py-2 rounded-xl hover:bg-gray-800 transition">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+      <div id="user-section" class="hidden md:flex items-center gap-3">
+        <i class="fas fa-user-circle text-3xl text-red-400"></i>
+        <span id="user-name-display" class="font-semibold"></span>
+      </div>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-7xl mx-auto px-6 py-12">
+    <h1 class="text-5xl font-bold mb-4 text-red-500 text-center">My Bookings</h1>
+    <p class="text-center text-gray-400 mb-8">Your Real Booked Tickets</p>
+
+    <div id="booking-history" class="space-y-6"></div>
+</div>
+
+<script>
+    function renderBookings() {
+        const bookings = JSON.parse(localStorage.getItem("myBookings")) || [];
+        const container = document.getElementById('booking-history');
+
+        if (bookings.length === 0) {
+            container.innerHTML = `<p class="text-center text-gray-400 py-12 text-xl">No bookings yet.<br>Book your first ticket from Movies page!</p>`;
+            return;
+        }
+
+        container.innerHTML = bookings.map(b => `
+            <div class="bg-gray-900 rounded-3xl p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 border-l-4 border-red-500">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold">${b.movie}</h3>
+                    <p class="text-red-400">${b.theatre} • ${b.date} • ${b.time}</p>
+                    <p class="text-amber-400 mt-2">Seats: ${b.seats}</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-4xl font-bold text-red-400">₹${b.amount}</p>
+                    <p class="text-xs text-gray-400 mt-1">Ticket ID: ${b.id}</p>
+                    <span class="inline-block mt-4 px-6 py-2 bg-emerald-600 text-white text-sm font-medium rounded-2xl">${b.status}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    window.onload = renderBookings;
+</script>
+</body>
+</html>

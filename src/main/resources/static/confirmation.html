@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment • Cinema Booking Ticket</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(to bottom, #1a0000, #000000); }
+        .success-animation { animation: successPop 0.6s ease; }
+        @keyframes successPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    
+    :root {
+        transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    
+    .dark {
+        background-color: #0a0a0a;
+        color: #ffffff;
+    }
+    
+    .theme-transition * {
+        transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+    }
+</style>
+<body class="text-white min-h-screen">
+
+<!-- PROFESSIONAL NAVBAR -->
+<nav class="bg-black border-b border-red-800 sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <div onclick="window.location.href='index.html'" class="flex items-center gap-3 cursor-pointer">
+      <span class="text-4xl">🎟️</span>
+      <div>
+        <h1 class="text-3xl font-bold tracking-tighter">CINEMA</h1>
+        <p class="text-red-500 text-sm -mt-1">BOOKING TICKET</p>
+      </div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-8 text-lg font-medium">
+      <a href="movies.html" class="hover:text-red-500">Movies</a>
+      <a href="shows.html" class="hover:text-red-500">Shows</a>
+      <a href="theatres.html" class="hover:text-red-500">Theatres</a>
+      <a href="#" class="hover:text-red-500">Date & Time</a>
+      <a href="coupons.html" class="hover:text-red-500">Coupons</a>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <button onclick="toggleTheme()" class="text-2xl px-3 py-2 rounded-xl hover:bg-gray-800 transition">
+        <i id="theme-icon" class="fas fa-moon"></i>
+      </button>
+      <div id="user-section" class="hidden md:flex items-center gap-3">
+        <i class="fas fa-user-circle text-3xl text-red-400"></i>
+        <span id="user-name-display" class="font-semibold"></span>
+      </div>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-2xl font-semibold flex items-center gap-2">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="max-w-lg w-full mx-auto mt-10 bg-gray-900 rounded-3xl overflow-hidden">
+    <div class="bg-gradient-to-r from-red-700 to-red-900 py-6 text-center">
+        <h1 class="text-3xl font-bold">COMPLETE PAYMENT</h1>
+    </div>
+
+    <div class="p-8">
+        <h2 id="movie-title" class="text-3xl font-semibold text-center mb-8"></h2>
+
+        <!-- Coupon Section -->
+        <div class="mb-8">
+            <p class="text-gray-400 mb-3">Have a Coupon?</p>
+            <div class="flex gap-3">
+                <input id="coupon-code" type="text" placeholder="Enter Coupon (e.g. MOVIE10)" 
+                       class="flex-1 bg-white/10 border border-white/20 rounded-2xl px-6 py-4 focus:outline-none focus:border-red-500">
+                <button onclick="applyCoupon()" class="bg-amber-500 hover:bg-amber-600 px-8 rounded-2xl font-semibold">Apply</button>
+            </div>
+        </div>
+
+        <!-- Total -->
+        <div class="bg-white/10 rounded-3xl p-6 text-center mb-10">
+            <p class="text-gray-400">Total Amount</p>
+            <p id="total-amount" class="text-5xl font-bold text-red-400 mt-2">₹1120</p>
+            <p id="discount-text" class="text-green-400 text-sm hidden mt-2">✅ 10% Discount Applied!</p>
+        </div>
+
+        <!-- Pay Button -->
+        <button onclick="processPayment()" 
+                class="w-full bg-red-600 hover:bg-red-700 py-7 text-2xl font-bold rounded-3xl transition-all active:scale-95">
+            Pay Now Securely
+        </button>
+    </div>
+</div>
+
+<script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('movie-title').innerText = params.get('movie') || "Doctor Strange";
+
+    let total = parseInt(params.get('total')) || 1120;
+    document.getElementById('total-amount').innerText = "₹" + total;
+
+    function applyCoupon() {
+        const code = document.getElementById('coupon-code').value.trim().toUpperCase();
+        if (code === "MOVIE10" || code === "BRAINWARE" || code === "ANKIT10") {
+            total = Math.round(total * 0.9);
+            document.getElementById('total-amount').innerText = "₹" + total;
+            document.getElementById('discount-text').classList.remove('hidden');
+            alert("✅ Coupon Applied Successfully! 10% Discount");
+        } else {
+            alert("Invalid Coupon Code");
+        }
+    }
+
+    function processPayment() {
+        const paymentHTML = `
+            <div class="p-8 text-center success-animation">
+                <div class="text-7xl mb-6">✅</div>
+                <h2 class="text-3xl font-bold text-emerald-400 mb-4">Payment Successful!</h2>
+                <p class="text-gray-400 mb-8">Your ticket has been booked</p>
+                
+                <div class="bg-white text-black p-8 rounded-3xl mx-auto max-w-xs">
+                    <div class="text-6xl font-mono tracking-[12px] mb-4">▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮</div>
+                    <p class="font-bold text-sm">TICKET ID: MTBS-${Math.floor(100000 + Math.random()*900000)}</p>
+                </div>
+
+                <button onclick="window.location='index.html'" class="mt-10 bg-red-600 hover:bg-red-700 px-12 py-5 rounded-2xl text-lg font-semibold">
+                    Show My Ticket → Home
+                </button>
+            </div>`;
+        document.querySelector('.max-w-lg').innerHTML = paymentHTML;
+    }
+
+    function toggleTheme() {
+        document.documentElement.classList.toggle('dark');
+        const icon = document.getElementById('theme-icon');
+        if (document.documentElement.classList.contains('dark')) {
+            icon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            icon.classList.replace('fa-sun', 'fa-moon');
+        }
+    }
+
+    function logout() {
+        if(confirm("Logout karna chahte ho?")) {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    }
+
+    window.onload = () => {
+        const name = localStorage.getItem("userName");
+        if(name) {
+            document.getElementById("user-name-display").innerText = name;
+            document.getElementById("user-section").classList.remove("hidden");
+            document.getElementById("user-section").classList.add("flex");
+        }
+    };
+</script>
+</body>
+</html>

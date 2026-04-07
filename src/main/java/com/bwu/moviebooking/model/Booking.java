@@ -1,6 +1,7 @@
 package com.bwu.moviebooking.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Booking {
@@ -14,14 +15,10 @@ public class Booking {
     private String seatNumber;
     private String userName;
 
-    public Booking() {
-    }
+    private LocalDateTime bookingDate;
+    private String status;
 
-    public Booking(String movieName, String showTime, String seatNumber, String userName) {
-        this.movieName = movieName;
-        this.showTime = showTime;
-        this.seatNumber = seatNumber;
-        this.userName = userName;
+    public Booking() {
     }
 
     public Long getId() {
@@ -58,5 +55,21 @@ public class Booking {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public LocalDateTime getBookingDate() {
+        return bookingDate;
+    }
+
+    public void setBookingDate(LocalDateTime bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
